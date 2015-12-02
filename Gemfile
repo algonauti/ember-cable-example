@@ -25,6 +25,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'ember-cli-rails'
 
+gem 'puma'
+
+gem 'actioncable', github: 'rails/actioncable'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

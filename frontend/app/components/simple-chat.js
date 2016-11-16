@@ -10,6 +10,8 @@ export default Ember.Component.extend({
   setupSubscription: Ember.on('init', function() {
     var consumer = this.get('cableService').createConsumer('ws://localhost:3000/websocket');
 
+		this.set('consumer', consumer);
+
     var subscription = consumer.subscriptions.create("MessagesChannel", {      
       received: (data) => {
         this.get('messages').pushObject({username: data.username, body: data.body});
@@ -19,7 +21,11 @@ export default Ember.Component.extend({
     this.set('subscription', subscription);
             
   }),
-  
+
+ 	willDestroy(){
+		this.get('consumer').subscriptions
+			.remove(this.get('subscription'));
+	},
   actions: {
     sendMessage() {
       this.get('subscription').send({ username: this.get('username'), body: this.get('body') });
